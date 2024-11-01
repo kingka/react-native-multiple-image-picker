@@ -268,6 +268,10 @@ extension MultipleImagePicker: TLPhotosPickerLogDelegate {
         if cell.asset?.mediaType == PHAssetMediaType.video {
             self.videoCount -= 1
         }
+        
+        if config.maxSelectedAssets == 1 {
+            self.selectedAssets.removeAll()
+        }
     }
     
     func selectedPhoto(picker: TLPhotosPickerViewController, at: Int) {
@@ -399,8 +403,8 @@ extension MultipleImagePicker: TLPhotosPickerViewControllerDelegate {
     }
     
     func dismissPhotoPicker(withTLPHAssets: [TLPHAsset]) {
-        // check with asset picker
         if withTLPHAssets.count == 0 {
+            self.selectedAssets.removeAll()
             self.resolve([])
             self.dismissComplete()
             return
